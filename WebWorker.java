@@ -57,6 +57,7 @@ private String readHTTPRequest(InputStream is){
       
          while (!r.ready()) 
 	      	Thread.sleep(1);
+            
          line = r.readLine();
          System.err.println("Request line: ("+line+")");
          

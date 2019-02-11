@@ -27,7 +27,7 @@ public void run(){
       InputStream  is = socket.getInputStream();
       OutputStream os = socket.getOutputStream();
 
-      String filePath = readHTTPRequest(is);		//turns the file path into a string
+      String filePath = readHTTPRequest(is);		   //turns the file path from the GET location into a string
       writeHTTPHeader(os,"text/html",filePath);		//prints out filePath	
       writeContent(os,"text/html",filePath);			//writes out filePath
 
@@ -61,11 +61,11 @@ private String readHTTPRequest(InputStream is){
          line = r.readLine();
          System.err.println("Request line: ("+line+")");
          
-         if(line.contains("GET ")){
+         if(line.contains("GET ")){          //extracts file path name if it it seens GET
             path = line.substring(4);
-            while(!(path.charAt(count) == ' '))
+            while(!(path.charAt(count) == ' ')) //ignores the word GET and the space
                count++;
-            path = path.substring(0,count);
+            path = path.substring(0,count); //updates the path name
          }
          
          if (line.length()==0) 
@@ -89,10 +89,11 @@ private void writeHTTPHeader(OutputStream os, String contentType, String filePat
    DateFormat df = DateFormat.getDateTimeInstance();
    df.setTimeZone(TimeZone.getTimeZone("MST7MDT"));
    
+   //concatenation of current working directory and path from GET
    String pathCopy = "." + filePath.substring(0,filePath.length());
    
    try{
-      
+      //Searches for path name
       FileReader inputFile = new FileReader( pathCopy );
       BufferedReader bufferFile = new BufferedReader( inputFile );
       os.write("HTTP/1.1 200 OK\n".getBytes());
@@ -104,6 +105,7 @@ private void writeHTTPHeader(OutputStream os, String contentType, String filePat
       
    } 
    
+   //Server header
    os.write("Date: ".getBytes());
    os.write((df.format(d)).getBytes());
    os.write("\n".getBytes());
@@ -125,14 +127,16 @@ private void writeHTTPHeader(OutputStream os, String contentType, String filePat
 private void writeContent(OutputStream os, String contentType, String filePath) throws Exception{
 	
       String str = "";
-      String pathCopy = "." + filePath.substring(0,filePath.length());
+      String pathCopy = "." + filePath.substring(0,filePath.length());   //update path with current directory
       
+      //Date objected created to update the date
       Date d = new Date();
       DateFormat df = DateFormat.getDateTimeInstance();
       df.setTimeZone(TimeZone.getTimeZone("MST/MDT"));
       
       try{
-      
+         
+          //checks if file path is valid
           File inputFile = new File( pathCopy );
           FileReader readerFile = new FileReader( inputFile);
           BufferedReader bufferFile = new BufferedReader( readerFile );

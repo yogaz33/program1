@@ -142,7 +142,7 @@ private void writeContent(OutputStream os, String contentType, String filePath) 
 		         str = str.replace("cs371date", df.format(d));  
         	   
 	          if(str.contains("cs371server"))
-		         str = str.replace("cs371date", "Server: Yare's very own server\n"); 
+		         str = str.replace("cs371server", "Server: Yare's very own server\n"); 
                
 	          os.write( str.getBytes() );
              os.write("\n".getBytes() );

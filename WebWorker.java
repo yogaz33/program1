@@ -86,7 +86,7 @@ private void writeHTTPHeader(OutputStream os, String contentType, String filePat
 
    Date d = new Date();
    DateFormat df = DateFormat.getDateTimeInstance();
-   df.setTimeZone(TimeZone.getTimeZone("GMT"));
+   df.setTimeZone(TimeZone.getTimeZone("MST7MDT"));
    
    String pathCopy = "." + filePath.substring(0,filePath.length());
    
